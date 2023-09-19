@@ -1,0 +1,7 @@
+.hardware h
+.inputs Reset
+.outputs Oscillator
+.latches
+Oscillator -> OscillatorM
+.update
+Oscillator = !Oscillator && !Reset
