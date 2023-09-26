@@ -5,36 +5,49 @@ hardware+
 inputs+ |
 outputs+ |
 update+ |
+initialization+ |
+declaration+ |
 latches+
 )+ EOF;
 //TODO add Variable declaration
 //TODO add .simulate
+declaration: DECLARATION initialization?;
+
+initialization : '=' BIT+;
 // Define the hardware rule
-hardware: '.hardware' DECLERATION;
+hardware: '.hardware ' DECLARATION;
 
 // Define the inputs rule
-inputs: '.inputs' BIT (BIT+);
+inputs: '.inputs' (' ' IDENTIFIER)+;
 
 // Define the outputs rule
-outputs: '.outputs' BIT (BIT+);
+outputs: '.outputs' (' ' IDENTIFIER)+;
 
 // Define the latches rule
-latches: '.latches' ('!'){1} BIT (BIT+);
+latches: '.latches' (' '? latch)+;
 
-update: '.update' x=DECLERATION '=' NOT? DECLERATION BOP NOT? DECLERATION
-        | b = BIT
-        | signal=update BOP exp=update;
+update: '.update' (expression ' = ' expression)+;
+
+
+
+latch : IDENTIFIER ' -> ' IDENTIFIER;
+
+expression : IDENTIFIER
+            | '(' expression ')'
+            | '!' expression
+            | expression ' && ' expression
+            | expression '||' expression
+            ;
 
 // variable decleration
-DECLERATION: [A-Za-z_][A-Za-z0-9_]*;
+DECLARATION: [a-z]+;
+IDENTIFIER : [A-Z] [a-zA-Z_0-9]* ;  // x17y
+//INITILIZATION: '=' BIT*;
 // Bit
-BIT: [0] | [1];
-NOT: '!';
-BOP : (AND | OR | NOT) ;        // &&, ||
-AND: '&&';
-OR: '||';
-IDENTIFIER : [a-zA-Z] [a-zA-Z_0-9]* ;  // x17y
-FLOAT      : [0-9]+ ('.' [0-9]+)? ;     // 17.42
+
+BOP : ('&&' | '||' | '!') ;        // &&, ||
+BINARY : [01]+ ;
+
 
 // Define whitespace rule (skip whitespace)
 WS: [ \t\r\n]+ -> skip;
