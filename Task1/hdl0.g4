@@ -7,6 +7,7 @@ outputs+ |
 update+ |
 initialization+ |
 declaration+ |
+simulate+ |
 latches+
 )+ EOF;
 //TODO add Variable declaration
@@ -27,6 +28,8 @@ outputs: '.outputs' (' ' IDENTIFIER)+;
 latches: '.latches' (' '? latch)+;
 
 update: '.update' (expression ' = ' expression)+;
+
+simulate: '.simulate'  IDENTIFIER '=' BINARY+;
 
 
 
