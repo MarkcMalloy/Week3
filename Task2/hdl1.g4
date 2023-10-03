@@ -26,7 +26,7 @@ outputs: '.outputs' (' ' IDENTIFIER)+;
 // Define the latches rule
 latches: '.latches' (WS? latch)+;
 
-update: '.update' (expression WS* '=' WS* expression)+;
+update: '.update' (expression ' '*? '=' ' '*? expression)+;
 
 initialization : '=' BIT+;
 // smarter way to fix white space for simulate
