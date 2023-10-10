@@ -26,7 +26,7 @@ outputs: '.outputs' (' ' IDENTIFIER)+;
 // Define the latches rule
 latches: '.latches' (WS? latch)+;
 
-update: '.update' (expression+ ' '*? '=' ' '*? expression*)+;
+update: '.update' (IDENTIFIER{1} ' '* '=' ' '* expression)+;
 
 initialization : '=' BIT+;
 // smarter way to fix white space for simulate
@@ -37,17 +37,15 @@ latch : IDENTIFIER ' -> ' IDENTIFIER;
 
 
 expression : IDENTIFIER
-            | '(' ' '*? expression ' '*? ')'
+            | '(' ' '* expression ' '* ')'
             | '!' expression
-            | expression ' '*? '&&' ' '*? expression
-            | expression ' '*? '||' ' '*?  expression
+            | expression ' '* '&&' ' '* expression
+            | expression ' '* '||' ' '*  expression
             ;
 
 // variable decleration
 DECLARATION: [a-z]+;
 IDENTIFIER : [A-Z] [a-zA-Z_0-9]* ;  // X
-//INITILIZATION: '=' BIT*;
-// Bit
 
 BOP : ('&&' | '||' | '!') ;        // &&, ||
 BINARY : [01]+ ;
@@ -55,4 +53,4 @@ BINARY : [01]+ ;
 
 COMMENT : '//' ~[\n]* -> skip;
 LONGCOMMENT : '/*' (~[*] | '*'~[/])* '*/' -> skip;
-WS: [ \t\r\n'']+ -> skip;
+WS: [ \t\r\n]+ -> skip;
