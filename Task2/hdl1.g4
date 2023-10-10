@@ -26,7 +26,7 @@ outputs: '.outputs' (' ' IDENTIFIER)+;
 // Define the latches rule
 latches: '.latches' (WS? latch)+;
 
-update: '.update' (expression ' '*? '=' ' '*? expression)+;
+update: '.update' (expression+ ' '*? '=' ' '*? expression*)+;
 
 initialization : '=' BIT+;
 // smarter way to fix white space for simulate
@@ -37,10 +37,10 @@ latch : IDENTIFIER ' -> ' IDENTIFIER;
 
 
 expression : IDENTIFIER
-            | '(' expression ')'
+            | '(' ' '*? expression ' '*? ')'
             | '!' expression
-            | expression ' && ' expression
-            | expression '||' expression
+            | expression ' '*? '&&' ' '*? expression
+            | expression ' '*? '||' ' '*?  expression
             ;
 
 // variable decleration
