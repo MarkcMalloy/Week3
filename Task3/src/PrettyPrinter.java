@@ -105,6 +105,17 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements implVisito
         return outputsToHtml.toString();
     }
 
+    //  visitSimulations()
+    @Override
+    public String visitSimulations(hdl1.SimulationsContext ctx){
+        //Simulations has the following grammar definition: '.simulate'  IDENTIFIER '=' BINARY+
+        StringBuilder simulationsToHtml = new StringBuilder("<h2>Simulations</h2>");
+        for(TerminalNode simulation : ctx.IDENTIFIER()){
+            //Take note that we might need to append a String conversion of the Binary which is of type int
+            // to the StringBuilder (cast int to string?)
+            simulationsToHtml.append("<p>").append(simulation.getText()).append("</p>");
+        }
+    }
 
 
 
