@@ -95,7 +95,6 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements implVisito
     /*
     visitUpdates() by Mark Malloy s153679
      */
-
     @Override
     public String visitOutputs(hdl1.OutputsContext ctx){
         StringBuilder outputsToHtml = new StringBuilder("<h2>Outputs</h2>");
@@ -105,16 +104,20 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements implVisito
         return outputsToHtml.toString();
     }
 
-    //  visitSimulations()
+    //  visitSimulations() by Mark Malloy s153679
     @Override
     public String visitSimulations(hdl1.SimulationsContext ctx){
         //Simulations has the following grammar definition: '.simulate'  IDENTIFIER '=' BINARY+
         StringBuilder simulationsToHtml = new StringBuilder("<h2>Simulations</h2>");
-        for(TerminalNode simulation : ctx.IDENTIFIER()){
-            //Take note that we might need to append a String conversion of the Binary which is of type int
-            // to the StringBuilder (cast int to string?)
-            simulationsToHtml.append("<p>").append(simulation.getText()).append("</p>");
+        List<TerminalNode> identifiers = ctx.IDENTIFIER();
+        List<TerminalNode> binaries = ctx.BINARY();
+        for (int i = 0; i < identifiers.size() && i < binaries.size(); i++) {
+            String identifier = identifiers.get(i).getText();
+            String binaryValue = binaries.get(i).getText();
+            // Map and append the BINARY and IDENTIFIER value to the StringBuilder
+            simulationsToHtml.append("<p>").append(identifier).append(" = ").append(binaryValue).append("</p>");
         }
+        return simulationsToHtml.toString();
     }
 
 
