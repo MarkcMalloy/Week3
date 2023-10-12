@@ -81,7 +81,7 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements implVisito
     }
 
     /*
-    visitInputs(), visitUpdates() & visitSimulations() by Mark Malloy
+    visitInputs() by Mark Malloy s153679
      */
     @Override
     public String visitInputs(hdl1.InputsContext ctx) {
@@ -91,6 +91,21 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements implVisito
         }
         return inputsToHtml.toString();
     }
+
+    /*
+    visitUpdates() by Mark Malloy s153679
+     */
+
+    @Override
+    public String visitOutputs(hdl1.OutputsContext ctx){
+        StringBuilder outputsToHtml = new StringBuilder("<h2>Outputs</h2>");
+        for(TerminalNode output : ctx.IDENTIFIER()){
+            outputsToHtml.append("<p>").append(output.getText()).append("</p>");
+        }
+        return outputsToHtml.toString();
+    }
+
+
 
 
 
